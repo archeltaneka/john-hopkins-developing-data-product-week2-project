@@ -1,0 +1,23 @@
+---
+title: "Developing Data Products - Week 2 Project"
+author: "Archel"
+date: "10/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Top 5 Covid Cases Around The World (12 October 2021)
+```{r echo=FALSE}
+library(leaflet)
+
+covid_cases <- data.frame(country=c('United States', 'India', 'Brazil', 'United Kingdom', 'Russia'),
+                          cases_in_millions=c(44.5, 34, 21.6, 8.19, 7.69),
+                          lat=c(37.0902, 20.5937, -15.793889, 51.509865, 61.5240),
+                          lng=c(-95.7129, 78.9629, -47.8919, -0.118092, 105.31880))
+covid_info <- c("Cases: 44.5M | Deaths: 715K", "Cases: 34M | Deaths: 451K", "Cases: 21.6M | Deaths: 601K", "Cases: 8.19M | Deaths: 138K", "Cases: 7.69M | Deaths: 214K")
+
+covid_cases %>% leaflet() %>% addTiles() %>% addCircleMarkers(weight=5, radius=sqrt(covid_cases$cases_in_millions)*10, color='red') %>% addMarkers(popup=covid_info)
+```
